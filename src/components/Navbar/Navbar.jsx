@@ -1,66 +1,143 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
+  FileTextOutlined,
+  FolderOpenOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  PieChartOutlined,
-} from '@ant-design/icons';
-import { Button, Menu } from 'antd';
-const items = [
-  { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
-  { key: '2', icon: <DesktopOutlined />, label: 'Option 2' },
-  { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
-  {
-    key: 'sub1',
-    label: 'Navigation One',
-    icon: <MailOutlined />,
-    children: [
-      { key: '5', label: 'Option 5' },
-      { key: '6', label: 'Option 6' },
-      { key: '7', label: 'Option 7' },
-      { key: '8', label: 'Option 8' },
-    ],
-  },
-  {
-    key: 'sub2',
-    label: 'Navigation Two',
-    icon: <AppstoreOutlined />,
-    children: [
-      { key: '9', label: 'Option 9' },
-      { key: '10', label: 'Option 10' },
-      {
-        key: 'sub3',
-        label: 'Submenu',
-        children: [
-          { key: '11', label: 'Option 11' },
-          { key: '12', label: 'Option 12' },
-        ],
-      },
-    ],
-  },
-];
-const App = () => {
+  MessageOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import { Button, Layout, Menu } from "antd";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
+import "../../styles/globals.css"
+
+const { Sider } = Layout;
+
+const Navbar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const auth = getAuth();
+
+  const handleLogout = async () => {
+    try {
+      setIsSubmitting(true);
+      await signOut(auth);
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const items = [
+    {
+      key: "/add-projects",
+      icon: <FolderOpenOutlined />,
+      label: <Link to="/add-projects">Add Projects</Link>,
+    },
+    {
+      key: "/add-about",
+      icon: <UserOutlined />,
+      label: <Link to="/add-about">Add About</Link>,
+    },
+    {
+      key: "/add-certificate",
+      icon: <FileTextOutlined />,
+      label: <Link to="/add-certificate">Add Certificate</Link>,
+    },
+    {
+      key: "/add-header",
+      icon: <AppstoreOutlined />,
+      label: <Link to="/add-header">Add Header</Link>,
+    },
+    {
+      key: "/comments",
+      icon: <MessageOutlined />,
+      label: <Link to="/comments">Comments</Link>,
+    },
+    {
+      key: "logout",
+      icon: <LogoutOutlined />,
+      label: isSubmitting ? "Signing out..." : "Logout",
+      danger: true, // Clean Red Highlight for Logout
+    },
+  ];
+
+  const handleMenuClick = ({ key }) => {
+    if (key === "logout") {
+      handleLogout();
+    }
+  };
+
   return (
-    <div style={{ width: 256 }}>
-      <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
+    <Sider
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      width={240}
+      style={{
+        minHeight: "100vh",
+        position: "sticky",
+        top: 0,
+        left: 0,
+        boxShadow: "2px 0 8px 0 rgba(29,35,41,.05)",
+      }}
+    >
+      {/* Top Header / Toggle Container */}
+      <div
+        style={{
+          height: "64px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: collapsed ? "center" : "space-between",
+          padding: "0 16px",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+        }}
+      >
+        {!collapsed && (
+          <span
+            style={{
+              color: "#fff",
+              fontSize: "16px",
+              fontWeight: "600",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Dashboard
+          </span>
+        )}
+        <Button
+          type="text"
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            color: "#fff",
+            fontSize: "16px",
+            width: 32,
+            height: 32,
+          }}
+        >
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </Button>
+      </div>
+
+      {/* Navigation Items */}
       <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
         theme="dark"
-        inlineCollapsed={collapsed}
+        mode="inline"
+        selectedKeys={[location.pathname]}
         items={items}
+        onClick={handleMenuClick}
+        style={{ borderRight: 0, marginTop: "8px" }}
       />
-    </div>
+    </Sider>
   );
 };
-export default App;
+
+export default Navbar;

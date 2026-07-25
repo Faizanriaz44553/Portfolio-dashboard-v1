@@ -48,3 +48,8 @@ html, body {
 .items-center {
   align-items: center;
 }
+.font{
+  font-size: 3rem;
+  color: #1a1a1a;
+  text-align: center;
+}

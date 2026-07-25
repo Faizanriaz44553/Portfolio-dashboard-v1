@@ -1,6 +1,15 @@
+
+
+
 const AddProjects = ()=>{
+
   return (
-    <div> Add projects</div>
+   <>
+   
+    <h1 className="font">Add projects</h1>
+   
+   
+   </>
   )
 }
 

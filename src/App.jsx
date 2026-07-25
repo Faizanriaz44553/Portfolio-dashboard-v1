@@ -1,11 +1,12 @@
-import React from 'react';
-import Login from './pages/login/Login.jsx';
+import { useRoutes } from "react-router-dom";
+import RoutesPath from "./routes";
+
+
 const App = () => {
-  return (
-    <div>
-      <Login />
-    </div>
-  );
+  
+  const routes = useRoutes(RoutesPath);
+
+  return routes;
 };
 
-export default App
+export default App;

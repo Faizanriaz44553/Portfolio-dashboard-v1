@@ -4,35 +4,72 @@ import AddAbout from "../pages/Add-About/Add-About.jsx";
 import AddCertificate from "../pages/Add-Certificate/Add-Certificate.jsx";
 import AddHeader from "../pages/Add-Header/Add-Header.jsx";
 import Comments from "../pages/Comments/Comments.jsx";
+import ProtectedRoute from "../components/ProtectedRoute.jsx";
+import GuestRoute from "../components/GuestRoute.jsx";
+import Navbar from "../components/Navbar/Navbar.jsx";
 
 const RoutesPath = [
   {
     path: "/",
-    element: <Login />,
+    element: (
+    <GuestRoute>
+      <Login />
+    </GuestRoute>
+  ),
   },
   {
     path: "/add-projects",
-    element: <AddProjects />,
+
+    element: (
+      <ProtectedRoute>
+        <Navbar/>
+        <AddProjects />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/add-about",
-    element: <AddAbout />,
+    element: (
+      <ProtectedRoute>
+        <Navbar/>
+        <AddAbout/>
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/add-certificate",
-    element: <AddCertificate />,
+    element:(
+      <ProtectedRoute>
+        <Navbar/>
+        <AddCertificate />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/add-header",
-    element: <AddHeader />,
+    element: (
+      <ProtectedRoute>
+        <Navbar/>
+        <AddHeader/>
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/comments",
-    element: <Comments />,
+    element:(
+      <ProtectedRoute>
+        <Navbar/>
+        <Comments/>
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/login",
-    element: <Login />,
+     element: (
+    <GuestRoute>
+      <Login />
+    </GuestRoute>
+  )
   },
 ];
 
