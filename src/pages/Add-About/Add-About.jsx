@@ -1,10 +1,10 @@
-const AddAbout = ()=>{
+const AddAbout = () => {
   return (
     <div>
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAPf_062JKWOBQr9rKxfyjLtlwzCn6Wwx_fJ6vQDIAgQ&s=10" alt="" />
+      <h1>Add About</h1>
+      <p>This page is visible now inside the dashboard layout.</p>
     </div>
-    
-  )
-}
+  );
+};
 
 export default AddAbout

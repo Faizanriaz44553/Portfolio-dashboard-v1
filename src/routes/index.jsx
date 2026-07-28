@@ -1,13 +1,21 @@
 import Login from "../pages/Login/Login.jsx";
 import AddProjects from "../pages/Add-Projects/Add-Projects.jsx";
-
+import AddAbout from "../pages/Add-About/Add-About.jsx";
 import AddCertificate from "../pages/Add-Certificate/Add-Certificate.jsx";
 import AddHeader from "../pages/Add-Header/Add-Header.jsx";
 import Comments from "../pages/Comments/Comments.jsx";
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
 import GuestRoute from "../components/GuestRoute.jsx";
 import Navbar from "../components/Navbar/Navbar.jsx";
-import AddAbout from "../pages/Add-About/Add-About.jsx";
+
+const DashboardLayout = ({ children }) => (
+  <div style={{ display: "flex", minHeight: "100vh" }}>
+    <Navbar />
+    <main style={{ flex: 1, padding: 24 }}>
+      {children}
+    </main>
+  </div>
+);
 
 const RoutesPath = [
   {
@@ -23,8 +31,9 @@ const RoutesPath = [
 
     element: (
       <ProtectedRoute>
-        <Navbar/>
-        <AddProjects />
+        <DashboardLayout>
+          <AddProjects />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
@@ -32,8 +41,9 @@ const RoutesPath = [
     path: "/add-about",
     element: (
       <ProtectedRoute>
-        <Navbar/>
-        <AddAbout/>
+        <DashboardLayout>
+          <AddAbout />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
@@ -41,8 +51,9 @@ const RoutesPath = [
     path: "/add-certificate",
     element:(
       <ProtectedRoute>
-        <Navbar/>
-        <AddCertificate />
+        <DashboardLayout>
+          <AddCertificate />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
@@ -50,8 +61,9 @@ const RoutesPath = [
     path: "/add-header",
     element: (
       <ProtectedRoute>
-        <Navbar/>
-        <AddHeader/>
+        <DashboardLayout>
+          <AddHeader />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
@@ -59,8 +71,9 @@ const RoutesPath = [
     path: "/comments",
     element:(
       <ProtectedRoute>
-        <Navbar/>
-        <Comments/>
+        <DashboardLayout>
+          <Comments />
+        </DashboardLayout>
       </ProtectedRoute>
     ),
   },
