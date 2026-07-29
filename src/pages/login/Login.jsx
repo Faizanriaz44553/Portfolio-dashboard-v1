@@ -4,10 +4,10 @@ import React from "react";
 import { Form, Input, Button, Card } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "/firebase.config.js";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { auth } from "../../../firebase.config";
 
 const Login = () => {
   const { control, handleSubmit } = useForm();
